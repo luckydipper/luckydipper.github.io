@@ -2,9 +2,11 @@
 markdown:         kramdown
 highlighter:      rouge
 
+
+
 # Setup
 remote_theme:     fongandrew/hydeout
-title:            복별SW
+title:            luckydipper
 tagline:          'A Jekyll theme'
 description:      'hello world'
 url:              https://luckydipper.github.io
