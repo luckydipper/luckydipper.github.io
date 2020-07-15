@@ -1,20 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> {{ page.title }} </title>
-    <style>
-        .body { color:blue;}
-    </style>
+<html lang="en-us">
 
-    <link rel="stylesheet" href="/assets/ css/ styles.css">
-</head>
-<body>
-    
-    <p class = "current">intro</p>
-    {% include navigation.html %}
-    
-    {{ content }}
-</body>
+  {% include head.html %}
+
+  <body class="{{ page.layout }}{% if page.url == '/' %} home{% endif %}">
+
+    {% include sidebar.html %}
+
+    <main class="container">
+      {{ content }}
+    </main>
+
+    {% include custom-foot.html %}
+  </body>
 </html>
