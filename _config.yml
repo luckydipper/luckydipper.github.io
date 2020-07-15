@@ -6,9 +6,9 @@ highlighter:      rouge
 
 # Setup
 remote_theme:     fongandrew/hydeout
-title:            luckydipper
+title:            복별SW
 tagline:          'A Jekyll theme'
-description:      'hello world'
+description:      '안녕하세요 저는 경희대학교 소프트웨어학과에 재학중입니다! ^^7'
 url:              https://luckydipper.github.io
 baseurl:          ''
                   # the optional subpath of your site, e.g. "/blog"
