@@ -38,3 +38,5 @@ sidebar_home_link:  true
 
 disqus:
   shortname: https-luckydipper-github-io
+
+google_analytics: 'UA-172721562-1'
