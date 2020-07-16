@@ -1,0 +1,77 @@
+I"�<p>교수님이 프로젝트하고 만들어가는 형식으로 하라고 알려주셨다. 하지만 난 모르겠다. 프로젝트 하고 싶은 거야 많다. 내가 어느 정도 바운더리에서 할 수 있을지 알려면 꾸준한 공부가 필요할 것이다. 나도 만들고만 싶으면 카야바아키히코</p>
+
+<p>C &amp; C++는 겨울 방학에 해야겠다. 어짜피 2학년 1학기에 들을 것이기 때문에,
+영어도 겨울 방학에 해야겠다. 자기 전공 분야도 못 하는데, 우선 알아들을 만큼 열심히 구글링 해야겠다.</p>
+
+<h1 id="목표-수정">목표 수정!</h1>
+
+<p>원래하고 싶던 프로젝트는 파이썬에서 터치하는 것으로 해킹하는거 만들어 보려고 했는데.
+<mark>소프트웨어 마에스트로</mark>에 가고 싶다. 그리고 <mark>소프트웨어 개발병</mark>으로 군대에 갈 것이다. ㅡㅅㅡ
+방학 동안 파이팅이다!</p>
+
+<ul>
+  <li>blog
+    <ul>
+      <li>1일 1포스트 하기! 포스트 묶는 index 만들기! 홈페이지와 연결해서 (너무 많아질 것이니 빨리 만들어야 겠다. ㅇㅁㅇ)</li>
+      <li>옆에 github 홈페이지로 가는 링크를 만들어야 겠다. 검색 엔진도 만들고 싶다.</li>
+      <li>커버를 씌우고 싶다. 옆으로 넘겨서 볼 수 있도록 하고 싶다
+<img scr="../assets/img/hobby/web.jpg" /></li>
+    </ul>
+  </li>
+  <li>web
+    <ul>
+      <li>html,css,javascript를 빨리하고 벡엔드를 공부하고 싶다. 벡엔드 쪽이 좀 더 끌린다.</li>
+      <li>제이쿼리는 비주류가 된 것 같다. 자바스크립트의 업그레이드 버전이 타입 스크립트였다.</li>
+      <li>1.react.js 2.angular 3.view.js
+  이들은 frame work라고</li>
+      <li>dango node.s spring -&gt; 자바로 만들어짐</li>
+    </ul>
+  </li>
+  <li>IOT
+    <ul>
+      <li>raspberrypi를 배워서 자율 주행 자동차나 RC{remote control}차를 만들고 싶다.</li>
+      <li>opencv랑 합치면 재밌을 것이다.</li>
+    </ul>
+  </li>
+  <li>algorithm
+    <ul>
+      <li>가능할지 ㅇㅁㅇ… 모르겠다. 우선 백준 풀고,</li>
+    </ul>
+  </li>
+  <li>machin learning
+    <ul>
+      <li>책에 대해서 포스트 하고 있었다. 너무 어려워서 잠정적으로 그만 해야겠다. 쿨럭,.. 수학이 딸린다.</li>
+    </ul>
+  </li>
+  <li>project
+    <ul>
+      <li>우선 lol highlight extractor를 완성시켜야 한다.</li>
+      <li>파이썬 매크로랑 화면인식 opencv를 이용해서 매크로를 만들어 보고 싶다</li>
+      <li></li>
+      <li>ext..</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="오늘-배운-것">오늘 배운 것</h2>
+<ol>
+  <li>teachable machin -&gt; tensorflow.py 혹은 tensorflow.js
+    <ul>
+      <li>제일 신기했다. multiclass classification을 지원하는 것 같았다. tensorflow.js</li>
+    </ul>
+  </li>
+  <li>framework</li>
+</ol>
+
+<p>어플리케이션이나 어플처럼 user의 컴퓨터에 깔아서 하는 것이 필요하다.</p>
+
+<p>다 가능할지 모르겠다. opencv 공부해서</p>
+
+<p>Q 환경변수에서 시스템변수
+import os
+import sys
+해서 넣었던 것 같은데</p>
+
+<p>환경변수가 따로 있는 것?? Anaconda
+루비 지킬?</p>
+:ET

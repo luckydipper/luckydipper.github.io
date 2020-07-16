@@ -1,0 +1,5 @@
+I"~<p>This post lives in the future and is dated Fri Dec 31 00:00:00 9999. It should only appear when Jekyll builds your project with the <code class="language-plaintext highlighter-rouge">--future</code> flag.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jekyll build <span class="nt">--future</span>
+</code></pre></div></div>
+:ET
