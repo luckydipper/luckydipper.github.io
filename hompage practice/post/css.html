@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="">
+    <style>
+        .checkbox {
+            display: none; 
+        }
+        .title {
+            color: purple;
+            font-weight: bold;
+        }
+        .desc {
+            max-height: 0px;
+            overflow: hidden;
+        }
+        .checkbox:checked + .title + .desc {
+            max-height: 1000px;
+        }
+    </style>
+</head>
+<body>
+    <input type="checkbox" class="checkbox" id="expandable-input" />
+    <label for="expandable-input" class="title">제목입니다.</label>
+    <p class="desc" style="color:pink;">
+      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quidem 
+      quam alias veritatis esse deserunt venia@m explicabo sunt eligendi,
+      eaque perferendis, doloremque omnis delectus distinctio incidunt
+      adipisci. Sit distinctio vero dolore.
+    </p>
+
+    <h2>collapse list expanalbe list</h2>
+    로 각각의 html를 구성한다. default format은 갇아 붙힌다.
+    javascript랑 css는 3가지로 만들 수 있다.
+
+
+    <ul>
+        <li>boxmodel</li>
+        <li>grid(span,div)</li>
+        <li>반응형디자인</li>
+        <li>link를 통해서 외부에서 가져오기</li>
+    </ul>
+
+    <ol>
+        <li>코드안에서 </li>
+        <li>head에서</li>
+        <li>밖의 파일에서</li>
+    </ol>
+    항상 ;를 붙혀야 한다는 것을 주의하자. attribute도 :를 써야한다<br>
+    코드 안에서는 style을 넣고 style="color:pink;"<br>
+    FONT-SIZE
+    <h5>반응형 웹</h5>
+    미디어 쿼리 -> element창 띄우고 좌우로 움직이면 픽셀나옴<br>
+    style에 넣어야함 @media(min-width:800px){ 중요한것은 media() 가로 안에 ; 없음
+        div{
+            display:none
+        }
+    }
+
+    <h6>용어 정리</h6>
+    head style | 복수개의 class에 style을 주고 싶으면, ","로 구분! attribute value가 여러개면 띄어쓰기
+    박스모델 & 그리드 & 반응형 디자인<br>
+    border: size color solid <br>
+    margin <br>
+    padding <br>
+    content <br>
+    content의 크기는 width hieght로 조절가능, <br>
+    #ID .CLASS <br>
+    그리드 blocklevel->div, inline level->span 1.display: grid; 2.grid-templete-cooumn: 150px 1fr;1fr->나머지 공간 의미<br>
+    fraction 2f 1f라고하면 2대1로 내분함.<br>
+    link rel="stylesheet" href="css.css">
+</body>
+</html>

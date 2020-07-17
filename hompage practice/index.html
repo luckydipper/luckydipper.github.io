@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hompage</title>
+
+    
+
+
+    <!--style overloading 가능-->
+    <style>
+    a {
+        color: #000;
+    }
+
+    .header{
+        color: yellow;
+        border-radius: 20px;
+        background-color: black;
+        border:solid;
+        border-width: 5px;
+        border-bottom: green ;
+        border-collapse: separate;
+        height: 100px; 
+        border: 4px solid pink;
+        margin: 20px;
+        margin-bottom: 5px;
+    }
+
+    .sidebar{
+        background-color:blue;
+    }
+
+    #selfdiscription{
+        color:red;
+        border:purple solid 5px
+    }
+    
+    #devideTwo{
+        display:grid;
+        grid-template-columns: 150px 1fr;
+    }
+
+    @media(max-width: 500px){
+        .header{
+            display:none;
+        }
+        div{
+            display:none;
+        }
+    }
+    
+
+    </style>
+    <link rel="stylesheet" href="css.css">
+    </head>
+
+
+<body>
+    <div class="header">
+        <h1>생활코딩에서 html css javascript를 배우다.</h1>    
+    </div>
+    <hr>
+    <div id="devideTwo">
+        <div id="selfdiscription">
+            Helow my name is blabla
+        </div>
+        <div class="sidebar">
+            <nav>
+                <ul><!--target default value is _self. we can choose _blank _self parent -->
+                    <li><a href="./post/html.html" target="_blank"> html </a></li>
+                    <li><a href="./post/css.html" target="_blank">css</a></li>
+                    <li><a href="./post/javascript.html" target="_blank">javascript</a></li>
+                    <li><a href="./post/jekyll.html" target="_blank">jekyll</a></li>
+                </ul>
+            </nav>
+        
+        </div>
+    </div>
+ 
+
+
+    <h2>collapse list expanalbe list</h2>
+    <script>
+        alert("hello world")
+    </script>
+</body>
+</html>
