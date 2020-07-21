@@ -1,0 +1,26 @@
+---
+layout: post
+title: "python class에 관하여"
+categories:
+  - computer
+tags:
+  - class
+  - attribute
+  - object
+last_modified_at: 2020-07-21
+comments: true
+---
+ps. jekyll blog를 만들고 그림을 넣는 법을 공부해야한다.. 좀만 있으면 넣을 수 있을 것 같다.
+python을 배우면서 가장 어려웠던 것이 뭐였을까?<br>
+ 당연이 class였던 것 같다. 처음에는 너무 어려웠다.객체지향 절차지향 등등 어려운 단어가 많이 나와서, 나만의 언어로 정리해보고자 한다.<br>
+
+
+# class 이해방법
+1. 너와 나는 class가 달라~ (클래스가 무엇인가?)
+2. 기능과 데이터를 묶는다. (왜 쓰는가?)
+3. (기능은 무엇인가?,overriding, overloading, inherit)
+
+instance 와 method 
+
+attribute
+
