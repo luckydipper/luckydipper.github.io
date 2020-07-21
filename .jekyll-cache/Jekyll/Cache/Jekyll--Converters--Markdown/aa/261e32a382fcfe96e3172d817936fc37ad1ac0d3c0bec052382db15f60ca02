@@ -1,0 +1,40 @@
+I"j<p>python을 배우면서 가장 어려웠던 것이 뭐였을까?<br />
+당연히 class였다! 지금은 익숙해 졌지만 처음에는 그 개념이 잘 와닿지 않았다.<br />
+그래서 인터넷에 구글링한 정보를 모아서, 나만의 언어로 정리해보고자 한다.<br /></p>
+
+<h1 id="class-이해방법">class 이해방법</h1>
+<ol>
+  <li>새로운 타입을 만들다. {클래스가 무엇인가? &amp; 필수 용어 정리}</li>
+  <li>함수와 데이터를 묶는다. {왜 쓰는가?}</li>
+  <li>내가 만든 type의 연산방식을 정한다{생성자 &amp; 필수 용어 정리2}</li>
+  <li>너와 나는 class가 달라~(기능은 무엇인가?,overriding, overloading, inherit, private)</li>
+</ol>
+
+<h2 id="1-새로운-타입을-만든다">1. 새로운 타입을 만든다.</h2>
+<p>“class는 새로운 인스턴스와 객체를 만든다.”이 말은 너무 어려워보인다.</p>
+
+<ul>
+  <li>그냥 type을 만든다고 이해하는 것이 좋은 것 같다.<br />
+예를 들어보자. <br /></li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">var1</span> <span class="o">=</span> <span class="s">"나는 어떤 자료형일까??"</span>
+<span class="c1">#var1에는 문자형의 자료형 문자열이, "안녕 나는 어떤 자료형일까??"으로 들어가 있다.
+</span></code></pre></div></div>
+
+<p>위의 코드에서 보면 “나는 어떤 자료형일까?”는 문자열의 instance, 즉 문자열의 한 <mark>예시</mark>이다.<br />
+(instance는 예시라는 뜻을 가지고 있다.)<br />
+class는 instance를 만드는</p>
+
+<p>attribute</p>
+
+<h2 id="2-함수와-데이터를-묶는다">2. 함수와 데이터를 묶는다.</h2>
+<p>클레스를 만드는 이유는 객체지향적으로 프로그래밍하기 위해서이다.<br />
+객체지향, 객체를 지향한다는 것은 <mark>데이터와 함수를 묶는다</mark>는 의미가 있다.<br /></p>
+
+<p>아래 예시를 들어보자.
+나는 게임을 만들 것이다.</p>
+
+<h2 id="3-대수구조를-만든다">3. 대수구조를 만든다.</h2>
+<p>대수구조</p>
+:ET
