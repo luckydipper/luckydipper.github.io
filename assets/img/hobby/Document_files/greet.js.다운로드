@@ -1,0 +1,12 @@
+const mainbord = document.querySelector(".mainPage"),
+    form = mainbord.querySelector("div:nth-child(1) form"),
+    input = form.querySelector("input")
+
+
+
+
+
+function main(){
+
+}
+main()

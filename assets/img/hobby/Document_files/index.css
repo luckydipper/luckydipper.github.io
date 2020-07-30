@@ -1,0 +1,8 @@
+#titl{
+    font-size: 60px;
+    border: coral;
+}
+.mainPage{
+    display:grid;
+    grid-template-columns: 150px 1fr;
+}
