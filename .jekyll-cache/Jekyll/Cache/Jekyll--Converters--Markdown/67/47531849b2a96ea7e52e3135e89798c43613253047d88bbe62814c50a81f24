@@ -1,0 +1,79 @@
+I"<p>3일 동안의 힘든 디버깅이었다. AsusVivobook 문제인지, intell 문제인지 에러 범벅이었다. ^^ 이 포스팅은 window와 ubuntu를 듀얼부팅 하면서 격은 오류에 대해서 정리한다.<br /></p>
+
+<ul>
+  <li>파티션을 축소 용량 error.</li>
+  <li>UEFI, BIOS RAGACY error.</li>
+  <li>우분투를 위해 마련해둔 파티션이 안보인다. ssd가 인식이 안 됨. RST, AHCI</li>
+</ul>
+
+<ol>
+  <li>우선 파티션을 지정부터 문제였다. 파티션을 나누려고 하는데 남은 공간이 적게 나왔다.
+<img src="/assets/img/computer/ubuntu/partition.png" />
+<a href="https://archive2497.tistory.com/entry/%EC%9D%B4%EB%8F%99%ED%95%A0-%EC%88%98-%EC%97%86%EB%8A%94-%ED%8C%8C%EC%9D%BC%EC%9D%B4-%EC%9E%88%EB%8A%94-%EC%A7%80%EC%A0%90%EC%9D%84-%EB%B2%97%EC%96%B4%EB%82%98-%EB%B3%BC%EB%A5%A8%EC%9D%84-%EC%B6%95%EC%86%8C%ED%95%A0-%EC%88%98-%EC%97%86%EC%8A%B5%EB%8B%88%EB%8B%A4-%ED%95%B4%EA%B2%B0%EB%B0%A9%EB%B2%95-%EC%A0%95%EB%A6%AC">이 링크를 클릭!<a></a></a></li>
+</ol>
+
+<p>나는 위의 링크의 3번 방법을 이용했다.<br />
+이벤트 뷰어로가서 event id가 259인 것이 무엇인지 확인했다. 그런데 System Volume Information 주소에서 오류가 났다고 나왔다! 와~ 접근하지도 못 하는데~ ^^ 이 때 사용한 방법은 위의 링크의 2번 내용을 시행했다. 시스템 보호 기능으로 가서, 디스크 공간만 삭제했다. 그리고 나머지 event id가 259인 것은 직접 찾아서 지웠다.<br /></p>
+
+<p><br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br /></p>
+
+<ol>
+  <li>UEFI BIOS RAGACY 오류
+<img src="/assets/img/computer/ubuntu/uefiError.jpg" />
+이건. 그냥 cancle하고 무시했다. 난 윈도우도 UEFI로 깔려있는데, BIOS로 깐 것도 없는데… 그냥 뒤로 이동하기 버튼을 누르면 다음 단계로 넘어간다.</li>
+</ol>
+
+<p><br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br /></p>
+
+<ol>
+  <li>우분투를 위해 마련해둔 공간이 안 보인다.
+이것이 제일 문제였다. 우분투 usb로 하는데 
+<img src="/assets/img/computer/ubuntu/arrange.jpg" />
+여기다가 마련해 놨는데,,, 
+<img src="/assets/img/computer/ubuntu/search.jpg" />
+안 보인다.</li>
+</ol>
+
+<p>이유는 ssd의 SATA MODE 때문이었다. 자세히는 모르겠지만 ssd를 읽고 묶는 방식이 다른것 같다. BIOS에 들어가서 설정 해야 한다. 아래 과정과 링크를 참고해 보자.
+<img src="/assets/img/computer/ubuntu/BIOS.jpg" />
+내 ssd의 모드는 RST로 되있었다. 이것을 AHCI로 바꾸어야 한다. 잘 못 바꿀 경우 윈도우도 통째로 날라간다고 해서 너무 무서웠다…<br /></p>
+
+<p><a href="https://www.youtube.com/watch?v=2uXgbF3P2F8&amp;t=426s">이 영상을 통해 sata mode를 바꾸고, 우분투를 듀얼부팅 했다.<a></a></a></p>
+
+<p>intel optain을 쓰진 않았는데, 다른 것만 따라해도 우분투를 위한 파티션이 보인다. ssd가 보인다!</p>
+
+<p><mark> 듀얼 부팅이 된 후, 아래 사진에서 window로 가기 누르면 안 된다! 원래 있던 RST나 IDE SATA MODE로 window에 들어가야한다. 저 상태에서 우분투를 사용하려면 SATA MODE가 ACHI가 되야한다.</mark></p>
+
+<p>그리고 나면, 이런 화면이 나올 것이다.
+<img src="/assets/img/computer/ubuntu/complete.jpg" /></p>
+
+<ul>
+  <li>이후로 할 일은 window를 AHCI로 여는 것이다.
+<a href="https://support.thinkcritical.com/kb/articles/switch-windows-10-from-raid-ide-to-ahci">영어를 잘한다면 원문 링크를 보자!<a></a></a></li>
+</ul>
+
+<p>처음에 세팅되있던 SATA MODE로 안전하게 window로 들어간다.</p>
+
+<p>이후, 명령 프롬프트를 관리자 권한으로 들어간다. 그냥
+<code class="language-plaintext highlighter-rouge">bcdedit /set safeboot minimal</code>를 치고 완료되면, 안전모드로 실행된다!</p>
+
+<p>다음 BIOS로 들어가서 SATAMODE를 AHCI로 바꾼다.
+<code class="language-plaintext highlighter-rouge">bcdedit /deletevalue safeboot</code>를 치면, 안전모드가 꺼진다.</p>
+
+:ET

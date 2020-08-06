@@ -10,18 +10,23 @@ tags:
 last_modified_at: 2020-07-21
 comments: true
 ---
-
+<img src="/assets/img/hobby/slime.jpg">
 python을 배우면서 가장 어려웠던 것이 뭐였을까?<br>
 당연히 class였다! 지금은 익숙해 졌지만 처음에는 그 개념이 잘 와닿지 않았다.<br>
 그래서 인터넷에 구글링한 정보를 모아서, 나만의 언어로 정리해보고자 한다.<br>
 <br>
 
 
+
 # class 이해방법
+
 1. 새로운 자료형, 나만의 타입을 만들다. {클래스가 무엇인가? & 필수 용어 정리}
 2. 함수와 데이터를 묶는다. {왜 쓰는가?}
 3. 내가 만든 type의 연산방식을 정한다{생성자 & 필수 용어 정리2}
 4. 너와 나는 class가 달라~{추가적 기능.overriding, overloading, inherit, private}
+
+
+
 <br>
 <br>
 <br>
@@ -30,7 +35,6 @@ python을 배우면서 가장 어려웠던 것이 뭐였을까?<br>
 * "class는 새로운 인스턴스와 객체를 만든다."이 말은 너무 어려워보인다.<br>
 * 쉽게 말하자면, <mark>class는 나만의 type을 만든다는 것이다.</mark><br>
 예를 들어보자.<br>
-
 ```python
 변수1 = "안녕?"
 #변수1에는  "안녕?"가 문자형의 자료형으로 들어가 있다.

@@ -1,0 +1,13 @@
+I"X<p>3일 동안의 힘든 디버깅이었다. AsusVivobook 문제인지, intell 문제인지 에러 범벅이었다. ^^ 이 포스팅은 window와 ubuntu를 듀얼부팅 하면서 격은 오류에 대해서 정리한다.<br /></p>
+
+<ul>
+  <li>파티션을 축소 용량 오류.</li>
+  <li>우분투에서 마련해둔 공간이 안보임. ssd가 인식이 안 됨. RST, AHCI</li>
+</ul>
+
+<ol>
+  <li>우선 파티션을 지정부터 문제였다. 파티션을 나누려고 하는데 남은 공간이 적게 나왔다.
+<img src="assets/img/computer/partition.png" />
+https://findwell.co.kr/66</li>
+</ol>
+:ET
