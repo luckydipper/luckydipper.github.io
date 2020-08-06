@@ -1,9 +1,10 @@
-I"<p>3일 동안의 힘든 디버깅이었다. AsusVivobook 문제인지, intell 문제인지 에러 범벅이었다. ^^ 이 포스팅은 window와 ubuntu를 듀얼부팅 하면서 격은 오류에 대해서 정리한다.<br /></p>
+I"<p>3일 동안의 힘든 디버깅이었다. AsusVivobook 문제인지, intell 문제인지 에러 범벅이었다. ^^ 이 포스팅은 window와 ubuntu를 듀얼부팅 하면서 격은 오류에 대해서 정리한다.<br /></p>
 
 <ul>
   <li>파티션을 축소 용량 error.</li>
   <li>UEFI, BIOS RAGACY error.</li>
-  <li>우분투를 위해 마련해둔 파티션이 안보인다. ssd가 인식이 안 됨. RST, AHCI</li>
+  <li>우분투를 위해 마련해둔 파티션이 안보인다. ssd가 인식이 안 됨. RST, AHCI
+<br /><br /></li>
 </ul>
 
 <ol>
