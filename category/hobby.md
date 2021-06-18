@@ -2,4 +2,3 @@
 layout: category
 title: hobby
 ---
-# 

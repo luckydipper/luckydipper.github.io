@@ -35,6 +35,14 @@ body {
 #sidebar {
   flex: 0 0 auto;
   padding: $section-spacing;
+  height: 100%;
+  position: relative;
+
+  overflow-y: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  scrollbar-width: none;
+  /*!caution! upper four segments were configurated.*/
 
   .site-title {
     font-family: 'Abril Fatface', serif;
@@ -45,6 +53,10 @@ body {
   }
 
   .site-title .back-arrow { margin-right: 0.5rem; }
+}
+/*!caution! bellow four segments were configurated.*/
+#sidebar::-webkit-scrollbar {
+  display: none; /* for Chrome, Safari, and Opera */
 }
 
 .content {
