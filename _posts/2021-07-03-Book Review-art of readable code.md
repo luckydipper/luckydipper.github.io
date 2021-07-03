@@ -44,7 +44,8 @@ ex) time_ms, unsafe, trusted_password<br>
 
 #### 4) 미학
 - 비슷한 일을 하는 코드는 비슷하게 쓴다.<br>
-- 연관된 코드는 comment와 함께 하나의 block으로 띄어써서 묶는다. <br>
+- 연관된 코드는 comment와 함께 <mark>하나의 block으로 띄어써서 묶는다.</mark> <br>
+- <mark>코드의 열을 맞춰라 </mark>
 - 변수의 설정 순서가 A,B,C이면, 다른 곳에서도 A,B,C로 써야한다.<br>
 
 #### 5) 주석을 달아야 하는 대상
