@@ -1,0 +1,39 @@
+I"�<h4 id="1-코드는-이해하는데-들이는-시간을-최소화-시켜야한다">1). 코드는 이해하는데 들이는 시간을 최소화 시켜야한다.</h4>
+<p><br /></p>
+
+<h2 id="part1-표면적-수준의-개선">part1. 표면적 수준의 개선</h2>
+<h4 id="2-이름에-정보-담기">2) 이름에 정보 담기.</h4>
+<p><mark>변수의 이름은 정보를 설명하는 공간이다.</mark> <br /></p>
+
+<ul>
+  <li>따라서, 명확하게, coding convention을 따른다.<br />
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C++에서 google의 coding convention은 다음과 같다.
+class      이름 : PascalCase (upper camel)
+function   이름 : camelCase  (lower camel)
+variable   이름 : snake_case
+member var 이름 : snake_case_
+const var  이름 : SNAKE_CASE
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>단어를 구체적으로 써야한다.<br />
+ex) get : 짧은 시간 -&gt; fetch, retrieve,download.<br />
+ex) start -&gt; launch, pause, restart, kill과 같은 느낌으로.<br /></p>
+  </li>
+  <li>
+    <p><mark>좁은 범위의 변수는 짧게, 광범한 변수는 길게 설정한다. </mark><br /></p>
+  </li>
+  <li>각 변수에 단위를 넣거나 추가적인 정보를 넣는다.<br />
+ex) time_ms, unsafe, trusted_password<br /></li>
+</ul>
+
+<h4 id="3-오해하기-쉬운-이름">3) 오해하기 쉬운 이름.</h4>
+
+<ul>
+  <li>경계를 포함하는 <mark>한곗값</mark>에는 min과   max를  사용한다.<br /></li>
+  <li>경계를 포함하는 <mark>범위  </mark>에는 first와 last를 사용한다.<br /></li>
+  <li>경계를 포함하고 배제하는 <mark>범위(마지막 미포함)</mark>는 begin과 end를 사용한다. <br /></li>
+</ul>
+
+<p>(pi)</p>
+:ET

@@ -35,14 +35,16 @@ body {
 #sidebar {
   flex: 0 0 auto;
   padding: $section-spacing;
+  
+  
+  // 모바일 사용성 아래 부분 바꿔야 할 긋 height가 문제인 것 같음.
   height: 100%;
   position: relative;
 
   overflow-y: auto;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
-  scrollbar-width: none;
-  /*!caution! upper four segments were configurated.*/
+  /*!caution! upper three segments were configurated.*/
 
   .site-title {
     font-family: 'Abril Fatface', serif;
