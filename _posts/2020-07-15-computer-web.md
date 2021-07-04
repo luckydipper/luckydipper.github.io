@@ -2,7 +2,7 @@
 layout: post
 title: "jeklly blog 만들기 힘들다"
 categories:
-  - computer
+  - ect computer
 tags:
   - jekyll
   - css
