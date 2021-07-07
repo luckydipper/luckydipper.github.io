@@ -47,3 +47,8 @@ Gemfile.lock
 _config.dev.yml
 .vscode
 *.gem
+
+
+# User difine
+# Ignore cache file
+.jekyll-cache/
