@@ -2,7 +2,7 @@
 layout: post
 title: "Electic Force"
 categories:
-  - physics
+  - Physics
 tags:
   - Electric field
   - Electricity

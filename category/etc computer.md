@@ -1,4 +1,4 @@
 ---
 layout: category
-title: ect computer
+title: etc computer
 ---

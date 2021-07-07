@@ -2,7 +2,7 @@
 layout: post
 title: "rasberrypi 개발환경 구축!"
 categories:
-  - ect computer
+  - etc computer
 tags:
   - rasberrypi
   - hdmi
