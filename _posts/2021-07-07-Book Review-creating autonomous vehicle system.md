@@ -118,10 +118,21 @@ robot operating system. 아직 3가지 부족한점이 있다.<br>
 - 안정성{reliablity, stability, robust}
 - 성능{Perfomance} broadcasting
 - 보안{security}
-안정성을 위해서 
+
+- 안정성 <br>
+ros는 ros master가 죽으면, system 전체가 멈춘다. <br>
+아파치 zookeeper : 분산 시스템을 관리하기 위해 사용하는 프로그램.<br>
+분산 처리 시스템(Distributed Processing System) : 운영체제 강의에서 배운다. <br>
+docker에 kubernetics 와 비슷한 느낌인가? <br>
+jenkins는 무엇인가? <br>
+<br >
+- 성능 <br>
+ROS 통신 loop-back 매커니즘을 통해 통신 : <br>
+broad casting vs multi casting <br>
 
 ##### <mark> 필자 : linux의 자율주행용 OS AGL이 있다. </mark>
 
 
 ### 3) server computer
 
+simulation
