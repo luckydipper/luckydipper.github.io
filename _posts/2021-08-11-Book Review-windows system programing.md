@@ -111,6 +111,7 @@ reference<br>
 <a herf = "http://www.liangshunet.com/en/202003/567276536.htm">
 tool custumize를 통해, advanced save option을 추가할 수 있습니다!</a><br>
 <a herf = "https://en.wikipedia.org/wiki/Wide_character">wide character와 ucs-2의 관계</a><br>
+<a herf = "https://brownbears.tistory.com/124">utf-8 BOM(Byte Oder Mark)</a>
 <br>
 
 ```
