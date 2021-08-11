@@ -2,7 +2,7 @@
 layout: post
 title: "This is C++"
 categories:
-  - Computer Network
+  - etc computer
 tags:
   - 
   - 
@@ -22,6 +22,7 @@ comments: true
 ### r value reference <br>
 
 ### format 방법 3가지. <br>
+Assignment initialization, copy initialization, Uniform initialization, 
 
 ### return pointer <br>
 > 함수 안에서 malloc으로 입력 받거나 <br>
