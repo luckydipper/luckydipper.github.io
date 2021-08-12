@@ -117,8 +117,10 @@ tool custumize를 통해, advanced save option을 추가할 수 있습니다!</a
 ```
 // wide char를 쓰면 컴파일러얌, UTF-16으로 읽으(디코딩)하란 뜻
 // 그냥 wide character 기반으로 사용하기 위해서 사용하는 것 같음.
-wmain(int argc, char* argv[])
+wmain(int argc, wchar_t* argv[])
 {
+  // argc : 전달 parameter의 수
+  // argv : 첫번째는 실행 경로, 나머지는 command에서 넘겨준 실행 parameter
     wchar_t some[] = "aa";
     // 한국어 출력시 setlocale 해야됨..
     _wsetlocale(LC_ALL, L"korean");
@@ -129,9 +131,11 @@ wmain(int argc, char* argv[])
 // window에서만 사용 가능
 // wide character 활용시, 몇몇 함수들과 호환이 안 될 수 있음.
 // 그러므로 _t를 매크로로 사용함.
+#include tchar.h
 _tmain(int argc, char* argv[])
 {
-    TCHAR
+  //UNICODE로 조건부 정의 돼있음
+  TCHAR str2[] = _T("aa");
 }
 ```
 윈도우에서는 type 이름을 대문자로 씁니다.<br> 
@@ -155,7 +159,30 @@ int main()
     std::cout << sizeof(wide_char) <<std::endl;      // 20 byte!
 }
 ```
+<br>
 
 # chapter 2.  64bit vs 32bit
+64bit 와 32bit의 차이는 IO bus에서 주소가 한번에 이동하는 크기.<br>
+CPU에서 한 쿨럭에 처리하는 크기.<br>
+process에 가상메모리를 할당해주는 크기.<br>
+windows 기반 자료형이 존재한다.<br>
+GetLastError함수를 통해 에러코드를 얻을 수 있다.<br>
+polimorphic 자료형을 제공한다. Linux에서는 호환성을 갖지 않는다.<br>
+<br>
+
+# chapter 3.  Process
+메인 메모리와 register chache에 올라가서 돌아가는 프로그램을 process라고한다. <br>
+process의 구조는 data, instruction, heap, stack 4개의 section으로 구성된다. 각 프로세스들은 독립된 우선순위와 메모리 공간을 갖는다.<br>
+process는 크게 3가지로 나뉜다. run$($cpu에서 연산 중$)$, Block$($IO 연산 중$)$, Ready$($OS에 의해 context switching이 언제든 가능하다.$)$<br>
+이런 process들이 context switching 하며 돌아가는 프로그램을 multi processing이라고 한다.<br>
+OS는 scheduler를 통해 context switching을 한다.<br>
+scheduling algorithm은 선점형$($preemption$)$ 비선점형$($non-preemption$)$ 방식이 있다.<br>
+non-preemption 방식에는 FIFO, Sortest Job First, HRN $($대기 시간과 실행 시간을 혼합하여 결정$)$
+preemption 방식에는 라운드 로빈$($Round Robin$)$, MultiLevel Queue, MultiLevel Feedback Queue
 
 
+
+CreateProcess
+
+PCB$($Process Control Block$)$를 windows 에서는 kernel object를 생성한다. 
+각 resource
