@@ -256,5 +256,16 @@ int main()
 }
 ```
 
+# chapter 6. Mailslot IPC
+IPC : Inter Process Conmmunication<br>
+process는 각각 독립적인 가상주소공간을 가지고 있다.<br> 
+mailslot은 bload casting이 가능하다. 동일 네트워크 도메인에 존재하는 호스트들 사이에도 가능.<br>
+Sender와 Receiver가 있다.<br>
+주소 체계는 //computername/mailslot/$[$path$]$name<br>
+실질적으로 고치는 부분은 computername과 path name 부분이다. $($네트워크 도메인은 $)$<br>
+Receiver는 mailslot을 만들고, Sender는 mailslot의 이름을 알아야한다.<br>
+Receiver는 CreateMailslot$($$)과 ReadFile$($$)$을 통해 구현한다.<br>
+Sender는 CreateFile$($$)$과 WriteFile$($$)$을 통해 구현한다. $($files system을 통해 구현 됐기 때문$)$<br>
+
 
 
