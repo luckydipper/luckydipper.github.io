@@ -6,7 +6,7 @@ categories:
 tags:
   - 컴퓨터 구조
   - 운영체제
-last_modified_at: 2021-08-11
+last_modified_at: 2021-08-13
 comments: true
 ---
 
@@ -40,7 +40,7 @@ comments: true
 <br>
 
 # chapter 1.  Unicode vs ASCII code
-이 부분은 책의 내용이 살짝 부족했던 것 같습니다.ㅠㅜ<br>
+이 부분은 책의 내용이 살짝 부족했던 것 같다.ㅠㅜ<br>
 유니코드, 인코딩, cp949의 차이를 설명해주고 있지 않네요.<br>
 특히 WBCS를 유니코드로 설명해주고 있는데 너무 헷갈렸습니다.<br>
 <mark>
@@ -170,19 +170,91 @@ GetLastError함수를 통해 에러코드를 얻을 수 있다.<br>
 polimorphic 자료형을 제공한다. Linux에서는 호환성을 갖지 않는다.<br>
 <br>
 
-# chapter 3.  Process
+# chapter 3, 4. 9. Process Scheduling
 메인 메모리와 register chache에 올라가서 돌아가는 프로그램을 process라고한다. <br>
 process의 구조는 data, instruction, heap, stack 4개의 section으로 구성된다. 각 프로세스들은 독립된 우선순위와 메모리 공간을 갖는다.<br>
 process는 크게 3가지로 나뉜다. run$($cpu에서 연산 중$)$, Block$($IO 연산 중$)$, Ready$($OS에 의해 context switching이 언제든 가능하다.$)$<br>
 이런 process들이 context switching 하며 돌아가는 프로그램을 multi processing이라고 한다.<br>
-OS는 scheduler를 통해 context switching을 한다.<br>
+OS는 scheduler를 통해 context switching을 한다. 한 process가 다른 process의 cpu 점유 시간까지 먹고 있는 상태를 starvation 이라고 한다.<br>
 scheduling algorithm은 선점형$($preemption$)$ 비선점형$($non-preemption$)$ 방식이 있다.<br>
-non-preemption 방식에는 FIFO, Sortest Job First, HRN $($대기 시간과 실행 시간을 혼합하여 결정$)$
-preemption 방식에는 라운드 로빈$($Round Robin$)$, MultiLevel Queue, MultiLevel Feedback Queue
+
+non-preemption 방식에는 FIFO, Sortest Job First, HRN $($대기 시간과 실행 시간을 혼합하여 결정$)$<br>
+preemption 방식에는 라운드 로빈$($Round Robin$)$, MultiLevel Queue, MultiLevel Feedback Queue<br>
+두 개를 합친 priority scheduling도 있다.<br>
+$($Round Robin$)$에서는 우선순위가 같은 process들은 형성있게, priority가 낮은 process는 높은 priority가 끝날 때 까지 기다린다.<br>
+이때 scheduler가 확인하는 시간 단위를 quentum 또는 time slice라고 한다. <br> 
+1. time slice마다<br>
+2. process의 생성 및 소멸마다<br>
+3. 실행중인 process가 io 상태로 blocking 될 때 마다 실행된다.<br>
+Prioriy inversion을 통해서 우선순위가 높은 프로세스가 낮은 프로세스에게 기회를 줄 수 있다.<br>
+Soft RTOS는 time slice가 작아서 반응성이 좋다. context switching이 자주 일어난다, <br>
+HARD RTOS는 Dead line이 존재해서 그 시간안에 무조건 끝낸다.<br>
+<br>
+
+<mark>CreateProcess</mark> 함수로 자식 process를 만든다.<Br>
+STARTUPINFO, PROCESSINFOMATION 등으로 console을 어디다가 어떻게 띄울지 결정한다.<br>
+SetProcessInfomation..<br>
+GetCurrentDirectory, GetSystemDirectory, GetWindowsDirectory, GetEnvorn.. <br>
+CreateProcess의 두번째 인자로 실행할 exe와 parameter를 넘길 수 있다. <br>
+current dir -> system dir -> windows dir -> environment path variable 순으로 찾는다. <br>
+PCB$($Process Control Block$)$를 windows 에서는 kernel object를 생성한다. <br>
+<br>
+
+
+# chapter 5. Kernel Object
+OS는 process들을 관리하기 위해, PCB라는 process control block을 만든다.<br>
+Process control block 안에는 program count, priority, status, process id, 메모리 관리 등등이 저장된다.<br>
+windows의 PCB는 kernel object이다.<br>
+kernel은 OS의 핵심 부분이다. scheduling, processing, 보안, deive driver등의 역할을 한다.<br>
+또한 process가 kernel에 접촉할 수 있게 빼놓은 포인터가 handle이다.<br>
+각 process는 독립적인 handle table을 갖고 있어, process에서 kenelobject의 제어가 가능하다.<br>
+handle table에는 자신의 kernel object를 가르키는 handle은 없다<br>
+private이기 때문에 kenelobject 안의 값을 직접적으로 바꾸지는 못한다. <br>
+Pipe, MailSlot, File 모두 kernel object로 관리된다.$($각각의 형태는 다르다.$)$<br>
+CloseHandle을 통해서 program counter의 값을 낮출 수 있다. program count가 0이 될 때, kernel object는 사라진다. <br>
+```
+#include <Windows.h>
+int main()
+{
+    STARTUPINFO start_info = { 0 };
+    PROCESS_INFO process_info = {0};
+    process_info.hProcess;
+    process_info.hThread;
+    HANDLE a = GetCurrentProcess();
+    TCHAR command[] = _T("AdderProcess.exe 1 2");
+    STARTUPINFO start_info{ 0 };
+    start_info.cb = sizeof(start_info);
+
+    PROCESS_INFORMATION process_info{ 0 };
+
+    bool is_run =CreateProcess(
+        NULL, // 생성할 프로세스의 실행 파일 이름, 경로 추가지정 가능
+        command, // 원래 command를 여기다 치고, 위에는 process 이름
+        NULL, // p보안
+        NULL, // t보안
+        TRUE, // 상속여부
+        NULL, //  CREATE_NEW_CONSOLE, process특성 우선순위나 새로운 process만들 때.
+        NULL, // 환경 변수 블럭 
+        NULL, // 생성하는 프로세스의 현재 디렉터리를 설정 
+        &start_info,
+        &process_info
+    );
+
+    //block 상태에서 child process가 끝날 때 까지 기다림
+    WaitForSingleObject(process_info.hProcess, INFINITE)
+
+
+    //정상적으로 종료됐는지 부모가 child kernel object의 handle을 가지고 확인가능!
+    GetExitCodeProcess(process_info.hProcess, &state);
+
+
+    //자식 process와 연결을 끊음. program counter를 1 낮춤
+    CloseHandle(process_info.hProcess);
+    CloseHandle(process_info.hThread);
+
+    //TerminateProcess로 프로세스 종료 가능
+}
+```
 
 
 
-CreateProcess
-
-PCB$($Process Control Block$)$를 windows 에서는 kernel object를 생성한다. 
-각 resource
