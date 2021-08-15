@@ -6,7 +6,7 @@ categories:
 tags:
   - 컴퓨터 구조
   - 운영체제
-last_modified_at: 2021-08-13
+last_modified_at: 2021-08-15
 comments: true
 ---
 
@@ -203,8 +203,10 @@ PCB$($Process Control Block$)$를 windows 에서는 kernel object를 생성한�
 
 # chapter 5. Kernel Object
 OS는 process들을 관리하기 위해, PCB라는 process control block을 만든다.<br>
-Process control block 안에는 program count, priority, status, process id, 메모리 관리 등등이 저장된다.<br>
+Process control block 안에는 program count, priority, state$($Signaled, None Signaled, process가 죽으면 signaled가 되고, 살아있으면 non-signaled이다.$)$, <br>
+status$($Ready, Run, Break$)$, process id, 메모리 관리 등등이 저장된다.<br>
 windows의 PCB는 kernel object이다.<br>
+물론 process뿐 아닌 다른 IPC들이나 file들도 kernel object로 관리된다. 각 resource 별로 kernel object의 형태는 다르다.<br>
 kernel은 OS의 핵심 부분이다. scheduling, processing, 보안, deive driver등의 역할을 한다.<br>
 또한 process가 kernel에 접촉할 수 있게 빼놓은 포인터가 handle이다.<br>
 각 process는 독립적인 handle table을 갖고 있어, process에서 kenelobject의 제어가 가능하다.<br>
@@ -240,9 +242,10 @@ int main()
         &process_info
     );
 
-    //block 상태에서 child process가 끝날 때 까지 기다림
+    //block 상태에서 child process가 signaled로 바뀔 때 까지 기다림.
     WaitForSingleObject(process_info.hProcess, INFINITE)
-
+    //WaitForMultipleObject(DWORD num_of_handle, Handle * handle_list, bool wait_all, DWORD timeout)
+    //부모 process는 자식이 끝날 때 까지 block 상태로 존재함.
 
     //정상적으로 종료됐는지 부모가 child kernel object의 handle을 가지고 확인가능!
     GetExitCodeProcess(process_info.hProcess, &state);
@@ -256,16 +259,112 @@ int main()
 }
 ```
 
+
 # chapter 6. Mailslot IPC
 IPC : Inter Process Conmmunication<br>
 process는 각각 독립적인 가상주소공간을 가지고 있다.<br> 
-mailslot은 bload casting이 가능하다. 동일 네트워크 도메인에 존재하는 호스트들 사이에도 가능.<br>
+<mark>
+  mailslot은 bload casting이 가능하다. but 단방향 <br>
+  Socket과 pipe가 더 광범휘 하게 쓰이는 것 같다. <br>
+</mark>
 Sender와 Receiver가 있다.<br>
 주소 체계는 //computername/mailslot/$[$path$]$name<br>
-실질적으로 고치는 부분은 computername과 path name 부분이다. $($네트워크 도메인은 $)$<br>
+실질적으로 고치는 부분은 computername과 path name 부분이다. $($네트워크 도메인이 같으면 공유 가능 socket이 더 좋겠지만$)$<br>
 Receiver는 mailslot을 만들고, Sender는 mailslot의 이름을 알아야한다.<br>
 Receiver는 CreateMailslot$($$)과 ReadFile$($$)$을 통해 구현한다.<br>
 Sender는 CreateFile$($$)$과 WriteFile$($$)$을 통해 구현한다. $($files system을 통해 구현 됐기 때문$)$<br>
 
+<mark>
+  process가 꺼진 Signaled 상태, process가 실행중인 None-Singaled 상태.<br>
+  WaitFor를 통해, 부모 process가 block 상태로 기다림.<br>
+</mark>
 
+CreateFile과 CreateMailslot이 생성 될 때 kernel object가 만들어진다.<br>
+mail_sender에서 자식 process에게 CreateFile의 kernel object를 가르키는 handle table을 상속해줄 수 있다.<br>
+헨들 상속여부는 리소스가 생성되는 순간 결정된다.<br>
+handle talble 상속 여부는 bInheritHandle에 의해 설정 됨.<br>
+SECURITY_ATTRIBUTE구조체 안에 정의되어있음. <br>
+
+##### Pseudo handle, Handle duplicate.<br>
+GetCurrentProcess는 프로세스가 자신의 kernel object를 가르키는 약어을 갖는다.<br>
+그러므로 실제 핸들을 얻기 위해서는, DuplicateHandle을 사용해야 한다.<br>
+```
+BOOL DuplicatedHandle(
+  복제할 프로세스의 헨들, A process의
+  복제할 헨들, 핸들 256을
+  복제된 헨들을 소유할 프로세스 헨들, B process에 등록해 
+  복제된 값들을 저장할 변수 주소, 등록된 값은 여기에 저장해
+  접근권한,
+  복제된 핸들의 상속여부,
+  원본 핸들과 접근권한
+)
+```
+<br>
+<br>
+
+# chapter 7. Pipe IPC
+Anonymous pipe, Named Pipe 두 종류가 존재한다. <br>
+Anonymous Pipe : 관계 있는 $($부모 자식, 형제$)$프로세스들 사이에서 통신 하는 경우. 단방향 CreatePipe<br>
+WriteFile과 ReadFile handle로 데이터를 송 수신한다. CreateNamedPipe<br>
+
+<br>
+Named Pipe : 소켓 메일슬롯과 비슷함. <br>
+서버에서는 CreateNamedPipe를 생성하고, Client의 CreateFile과 연결함. <br>
+자식 프로세스에게 핸들 정보를 넘겨주려면 매개변수로 넘겨주거나, 환경변수로 넘겨주는 방법이 좋다.<br>
+
+
+# chapter 9. 10. Thread                         
+Thread는 scheduling되는 가장 작은 단위이다. <br>
+Process 안에서 Locality가 보장되기 때문에 multi process보다 빠르다.<br>
+각 Process에서 stack 공간을 독립적으로 사용하고, data section과 code section heap section은 공유한다. <br>
+kernel level Thread vs User level Thread <br>
+대체적으로 thread 한개가 IO중이면, process 전체가 멈출 수 있다. user가 더 빠르지만 한정된 기능을 제공한다. <br>
+beginthreadex함수를 사용하자. CreateThread 보다는, 왜냐면 ANSI기준 함수를 못쓴다고 한다. <br>
+ps. 그럴바엔 STL의 thread를 쓰는 것이 좋겠다.<br>
+<br>
+
+# chapter 11. 12. Thread Synchronize
+multi thread program에서 같은 변수에 접근하면 오류가 난다. $($register에서 계산되는 과정을 생각해보자$)$<br>
+<br>
+
+
+
+# chapter 14. Thread Synchronize
+실행 순서의 동기화 vs 메모리 접근의 동기화 <br>
+multi thread programing에서 Critical Setion에서 문제가 발생함. <br>
+> User mode Synchronize 성능상 이점. kernel mode로 이동하지 않기 때문에. 해당 구간에는 열쇠가 1개이다.<br>
+>> Critical Section. 해당 부분을 묶자<br>
+>> Inter lock funciton $($간단한 critical section만 묶으면 될 때, 함수로 처리하자$)$<br>
+> Kernel mode Synchronize <br>
+>> Mutex 열쇠가 1개다<br>
+>> Semaphore 열쇠가 여러개다.<br>
+>> named Mutex <br>
+>> ---실행 순서의 동기화<br>
+>> 생산자와 소비자. 만들어져야지 쓰지! <br>
+>> Event <br>
+>>> 수동리셋 모드 : signaled가 됐을 때 복수개 처리 <br>
+>>> 자동리셋 모드 : 자동으로 한개씩 함<br>
+>>> 이벤트 생성과 소멸 <br>
+>> Timer 함수를 계속 x 초마다 불러야해. <br>
+
+
+# chapter 13. Thread Pool
+Thread를 생성하고 소멸하는 작업은 큰 overhead가 있다. <br>
+그러므로 Thread를 생성해 둔 후, block 시켜놓고, 일이 생길 때마다 Thread를 할당하여 사용한다. <br>
+<br>
+
+# chapter 15. I/O control, Exception Handling
+ANSI 표준 함수는 system 함수를 call한다.<br>
+인터넷을 참조하자! <br>
+
+# chapter 16. synchronous vs asynchronous
+중첩을 통해 해결.<br>
+ANSI 함수 fread는 파일러 부터 함수를 읽을 때, block 된다. 즉 block-funciton이다. <br>
+system 함수를 쓰면 non-block상태의 함수를 호출가능하다. <br>
+synchronous 통신은 Overapped IO를 통해 구현한다. <br>
+
+# chapter 17. virtual mememory heap mmf
+
+
+# chapter 18. DLL
 
