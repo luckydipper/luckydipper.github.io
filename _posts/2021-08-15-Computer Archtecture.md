@@ -34,7 +34,7 @@ ex$)$ PUSH POP <br>
 
 DIRECT vs INDIRECT<br>
 $[$0x22 15 33$]$<br>
-
+![assembly](/assets/img/computer/archtecture/assembly.jpg)
 <br>
 
 #### CPU눈 구조에 따라 RISC와 CISC으로 나뉨
