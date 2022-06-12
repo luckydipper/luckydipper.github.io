@@ -1,3 +1,3 @@
-# github blog 만들기!
-
-시간 날때 올리겠음..
+# github blog
+copy right : hydeout <br>
+https://github.com/fongandrew/hydeout
