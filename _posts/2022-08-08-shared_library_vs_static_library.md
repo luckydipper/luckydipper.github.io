@@ -19,12 +19,65 @@ comments: true
 라이브러리가 다른 프로그램에서 많이 사용 된다면 동적 라이브러리로 만드는 것이 좋다.<br>
 하지만 동적라이브러리를 사용하면, 처음 시작할 때 해당 라이브러리의 위치를 파악하는데 오래 걸린다.<br>
 그래서 포토샵 같은 프로그램은 시작 할 때 오래 걸린다. <br> 
+<b> 
+  본 포스팅에서는 예제를 통해 static library와 shared library를 만들 것이다. <br>
+  예제 코드 : https://github.com/luckydipper/c_cpp_compile_process/tree/main/make_library <br>
+</b>
+
+<mark>
+  시작하기 앞서, library를 만들 때 이름에 주의 해야한다.<br> 
+  파일 이름은 lib{name}.a 또는 lib{name}.so로로 하면 좋다.<br>
+  clang과 gcc에서 -l flag로 library를 linking 할 때에는 파일 이름 앞에 lib이 적혀있어야 하기 때문이다. <br>
+  또한 lib가 앞에 붙은 so 파일은 링크 시간에 사용되는 library로 설계한다.<br>
+  만약 앞 부분에 lib가 없는 so 파일일 경우 runtime에 plug in 되는 library이다. <br>
+</mark>
+
+# 목차
+[1.정적 라이브러리](#정적-라이브러리) <br>
+  * [1.1 정적 라이브러리 만드는 방법](#정적-라이브러리-만드는-방법)<br>
+  * [1.2 예제 파일 구조](#예제-파일-구조)<br>
+  * [1.3 static Makefile](#static-Makefile)<br>
+  * [1.4 사칙 연산 파일 예시](#사칙-연산-파일-예시)<br>
+  * [1.5 정적 라이브러리 살펴보는 방법](#정적-라이브러리-살펴보는-방법)<br>
+  * [1.6 정적 라이브러리 링킹하여 사용하기](#정적-라이브러리-링킹하여-사용하기)<br>
+
+[2.동적  라이브러리](#동적-라이브러리) <br>
+  * [2.1 동적 라이브러리 만드는 방법](#동적-라이브러리-만드는-방법)<br>
+  * [2.2 파일 구조](#파일-구조)<br>
+  * [2.3 shared Makefile](#shared-Makefile)<br>
+  * [2.4 링킹하여 실행 하는 법](#링킹하여-실행-하는-법)<br>
+  * [2.5 동적 라이브러리 살펴보는 방법](#동적-라이브러리-살펴보는-방법)<br>
+  * [2.6 Execution time에 메모리에 올려 실행하는 방법](#Execution-time에-메모리에-올려-실행하는-방법)<br>
+
+[3. 출처](#출처)<br>
+
 
 # 정적 라이브러리 $($static library$)$
-링킹 할 때, 해당 라이브러리 전체를 실행 파일에 링킹한다.
+링킹 할 때, 해당 라이브러리 전체를 실행 파일에 링킹한다.<br>
 
-### 만드는 방법
-Makefile<br>
+## 정적 라이브러리 만드는 방법
+
+### 예제 파일 구조
+```
+  make_library/
+  ├── Makefile
+  ├── add.cpp
+  ├── add.hpp
+  ├── add.o
+  ├── cube.o
+  ├── div.cpp
+  ├── div.hpp
+  ├── div.o
+  ├── mul.cpp
+  ├── mul.hpp
+  ├── mul.o
+  ├── sub.cpp
+  ├── sub.hpp
+  └── sub.o
+  결과 파일 arithmetic_operation.a
+```
+
+### static Makefile
 ```
 CC = clang++-9
 flag = -c
@@ -46,27 +99,8 @@ arithmetic_operation.a : add.o mul.o sub.o div.o
 ```
 ar의 r flag는 replace existing or insert new files into the archive<br>
 
-파일 구조
-```
-make_library/
-├── Makefile
-├── add.cpp
-├── add.hpp
-├── add.o
-├── cube.o
-├── div.cpp
-├── div.hpp
-├── div.o
-├── mul.cpp
-├── mul.hpp
-├── mul.o
-├── sub.cpp
-├── sub.hpp
-└── sub.o
-결과 파일 arithmetic_operation.a
-```
 
-사칙 연산 파일 예시<br>
+### 사칙 연산 파일 예시
 ```
 //add.hpp
 int add(int a, int b);
@@ -78,7 +112,7 @@ int add(int a, int b){
 }
 ```
 
-라이브러리 살펴보는 방법 <br>
+### 정적 라이브러리 살펴보는 방법 
 ```
 ar -tv make_library/arithmetic_operation.a
 
@@ -89,7 +123,7 @@ rw-r--r-- 0/0    960 Jan  1 00:00 1970 sub.o
 rw-r--r-- 0/0    960 Jan  1 00:00 1970 div.o
 ```
 
-정적 라이브러리 링킹하여 사용하기<br>
+### 정적 라이브러리 링킹하여 사용하기
 ```
 make_library/
 ├── main.cpp
@@ -104,10 +138,6 @@ clang++-9 make_library/cube.o make_library/main.o make_library/arithmetic_operat
 // 혹은
 clang++ -o linking_main_cube_arithimetic.out main.o cube.o -Lpath/to/libarithmetic_operation.a -larithmetic_operation // 이때 확장자와 앞의 lib은 붙히지 않음.
 ```
-<mark>library를 만들 때, 파일 이름은 lib{name}.a 또는 lib{name}.so로로 하면 좋다.<br>
-왜냐면, clang과 gcc에서 -l flag로 library를 linking 할 때에는 lib가 앞에 적혀있어야 한다. lib가 앞에 붙은 so 파일은 링크 시간에 사용되는 library로 설계한다.<br>
-만약 앞 부분에 lib가 없는 경우 runtime에 plug in 되는 library이다.</mark><br>
-출처 : https://stackoverflow.com/questions/6561273/is-liblibrary-name-a-so-a-naming-convention-for-static-libraries-in-linux <br>
 
 자세한 파일 내용<br>
 ```
@@ -142,11 +172,34 @@ int cube(int a)
 }
 ```
 
-예제 코드 : https://github.com/luckydipper/c_cpp_compile_process/tree/main/make_library
 
 # 동적 라이브러리 $($shared library$)$
+링킹 할 때 라이브러리를 링킹 할 수도 있고, 실행중에 메모리에 올려서 사용 할 수도 있다.<br>
 
-### 만드는 방법
+## 동적 라이브러리 만드는 방법
+
+### 파일 구조
+```
+make_library/
+├── Makefile
+├── add.cpp
+├── add.hpp
+├── add_.o
+├── div.cpp
+├── div.hpp
+├── div_.o
+├── libarithmetic_operation.so // 만들어짐
+├── main.cpp
+├── main.o
+├── mul.cpp
+├── mul.hpp
+├── mul_.o
+├── sub.cpp
+├── sub.hpp
+└── sub_.o
+```
+
+### shared Makefile
 ```
 CC = clang++-9
 flag = -c -fPIC -o  # postion independent code
@@ -165,18 +218,16 @@ div_.o : div.cpp div.hpp
 
 libarithmetic_operation.so : add_.o mul_.o sub_.o div_.o
 	clang++-9 -shared -o libarithmetic_operation.so add_.o mul_.o sub_.o div_.o
-
-# gcc -shared -W1,-soname,libmycalcso.so.1 -o libmycalcso.so.1.0.1 sum.o sub.o mul.o div.o
-# ln -s libmycalcso.so.1.0.1 libmycalcso.so
-# 이렇게 symbolic linking 해놓으면, 나중에 버전 관리 하기 쉽다.
 ```
-실행
+
+### 링킹하여 실행 하는 법
 ```
 clang++-9 -o print_-1.out main.o cube.o -L./ -larithmetic_operatio
 // print_-1.out이 만들어짐!
 
 ./print_-1.out
 error while loading shared libraries: libarithmetic_operation.so: cannot open shared object file: No such file or directory
+//위와 같은 에러가 뜰 것이다.
 ```
 <mark> 
   호출할 라이브러리의 위치를 알아야 한다. <br>
@@ -185,14 +236,21 @@ error while loading shared libraries: libarithmetic_operation.so: cannot open sh
 </mark>
 ```
 export LD_LIBRARY_PATH=~/desktop/c_cpp_compile_process/make_library
- 
-ldd make_library/print_-1.out
-// 명령어 치기 전 결과 : libarithmetic_operation.so => not found
-// 명령어 친 후 결과 : libarithmetic_operation.so => /home/qhrqufdlek/desktop/c_cpp_compile_process/make_library/libarithmetic_operation.so
 ```
-shared library를 symbolic link 하면, version constrol하기 쉽다. ln을 이용한다. <br>
 
-### shared library runtime loading
+### 동적 라이브러리 살펴보는 방법
+```
+ldd make_library/print_-1.out
+// export 명령어 치기 전 결과 : libarithmetic_operation.so => not found
+// export 명령어 친 후 결과 : libarithmetic_operation.so => /home/qhrqufdlek/desktop/c_cpp_compile_process/make_library/libarithmetic_operation.so
+```
+
+```
+# ln -s libmycalcso.so.1.0.1 libmycalcso.so
+shared library를 symbolic link 하면, version constrol하기 쉽다. <br>
+```
+
+### Execution time에 메모리에 올려 실행하는 방법
 ```
 #include <dlfcn.h>
 // 써야 하는 함수의 prototype
@@ -210,6 +268,7 @@ void *dlsym(void *handle, const char *symbol);
 // return 함수를 찾는데 NULL이 return됐으면 error. 아니면 dlerror로 찾음.
 ```
 dlfcn.h 라이브러리를 사용하는 파일은 -ldl로 컴파일 해야한다. libdl.so를 이용하기 때문이다.<br>
+
 ```
 //run_time_linking.cpp
 include <dlfcn.h>
@@ -251,8 +310,9 @@ int main(int argc, char **argv)
   // command
   clang++-9 -o runtime_linking.out -ldl runtime_link.cpp
 ```
-
-이때 주의 해야할 것은 dlsym$($handle, "_Z3addii"$)$에서 함수의 이름이 _Z3addii가 됐다는 것이다.<br>
+<mark>
+  !주의! dlsym$($handle, "_Z3addii"$)$에서 함수의 이름이 _Z3addii가 됐다. <br>
+</mark>
 이는 c++이 name mangling$($overloading, 같은 이름의 함수 사용하기 위해 함수 이름을 변환 시킴$)$ 때문이다.<br>
 
 ```
@@ -266,9 +326,11 @@ readelf -a libarithmetic_operation.so
   extern "C" int test_dl_func();
 ```
 
+
 # 출처 
 씹어 먹는 c++ <br>
 embedded recipy <br>
+https://stackoverflow.com/questions/6561273/is-liblibrary-name-a-so-a-naming-convention-for-static-libraries-in-linux <br>
 https://www.joinc.co.kr/w/Site/C/Documents/CprogramingForLinuxEnv/Ch12_module<br>
 https://yaaam.tistory.com/entry/Linux-%EB%8F%99%EC%A0%81-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC-%EB%A1%9C%EB%93%9C-dlopen-dlsym-dlclose-dlerror <br>
 https://modoocode.com/321<br>
