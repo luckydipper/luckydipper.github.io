@@ -15,7 +15,6 @@ comments: true
 섞는 방식은 두 가지가 있다.<br>
 하나는 정적 라이브러리로 만드는 것이고, 다른 하나는 동적 라이브러리로 만드는 것이다.<br>
 ![shared_vs_static](/assets/img/computer/etc computer/shared_lib_vs_static_lib/static_shared_lib.png)
-출처 : https://modoocode.com/321<br>
 위의 그림이 두 라이브러리의 차이를 잘 보여준다. <br>
 라이브러리가 다른 프로그램에서 많이 사용 된다면 동적 라이브러리로 만드는 것이 좋다.<br>
 하지만 동적라이브러리를 사용하면, 처음 시작할 때 해당 라이브러리의 위치를 파악하는데 오래 걸린다.<br>
@@ -180,38 +179,100 @@ clang++-9 -o print_-1.out main.o cube.o -L./ -larithmetic_operatio
 error while loading shared libraries: libarithmetic_operation.so: cannot open shared object file: No such file or directory
 ```
 <mark> 
-  호출할 라이브러리의 위치를 알아야 한다.<br>
+  호출할 라이브러리의 위치를 알아야 한다. <br>
   /etc/ld.so.conf 이 위치가 dll을 찾아보는 위치를 담고 있다. <br>
   혹은 환경변수 LD_LIBRARY_PATH를 활용하여 만들 수 있다. <br>
 </mark>
 ```
 export LD_LIBRARY_PATH=~/desktop/c_cpp_compile_process/make_library
+ 
+ldd make_library/print_-1.out
+// 명령어 치기 전 결과 : libarithmetic_operation.so => not found
+// 명령어 친 후 결과 : libarithmetic_operation.so => /home/qhrqufdlek/desktop/c_cpp_compile_process/make_library/libarithmetic_operation.so
+```
+shared library를 symbolic link 하면, version constrol하기 쉽다. ln을 이용한다. <br>
+
+### shared library runtime loading
+```
+#include <dlfcn.h>
+// 써야 하는 함수의 prototype
+
+void *dlopen (const char *filename, int flag);
+// 일반 명명규칙(lib*.so)을 따르지 않아도 되고, LD_LIBRARY_PATH 환경변수에 directory를 추가하지 않아도 된다.
+// 오류 발생시 NULL이 return된다.
+
+const char *dlerror(void);
+
+void *dlsym(void *handle, const char *symbol);
+// symbol(함수 또는 전역변수)의 위치에 대한 pointer를 얻습니다.
+// handle : return 받은 shared object handle
+// symbol : shared object에서 찾고자 하는 symbol
+// return 함수를 찾는데 NULL이 return됐으면 error. 아니면 dlerror로 찾음.
+```
+dlfcn.h 라이브러리를 사용하는 파일은 -ldl로 컴파일 해야한다. libdl.so를 이용하기 때문이다.<br>
+```
+//run_time_linking.cpp
+include <dlfcn.h>
+#include <stdio.h>
+
+int main(int argc, char **argv) 
+{
+    int one = 1;
+    int result;
+    char *error;
+    int (*ptr_sum)(int, int) = NULL;
+
+    void *handle = dlopen ("/home/qhrqufdlek/desktop/c_cpp_compile_process/make_library/libarithmetic_operation.so", RTLD_LAZY);
+
+    if(handle == NULL) 
+    {
+        printf("%s\n", dlerror());
+        return 1;
+    }
+    ptr_sum = (int (*)(int, int))dlsym(handle, "_Z3addii");
+    //아니 name mangling 된 것까지 symboltable 보고 가져와야 함?
+    printf("%s\n", dlerror());
+    if((error = dlerror()) != NULL) 
+    {
+
+        printf("error\n");
+        dlclose(handle);
+        return 1;
+    }
+
+    printf("%i \n", ptr_sum(one, one));
+    dlclose(handle);
+
+    return 0;
+}
 ```
 
-# PE vs ELF
+```
+  // command
+  clang++-9 -o runtime_linking.out -ldl runtime_link.cpp
+```
 
-dll.
+이때 주의 해야할 것은 dlsym$($handle, "_Z3addii"$)$에서 함수의 이름이 _Z3addii가 됐다는 것이다.<br>
+이는 c++이 name mangling$($overloading, 같은 이름의 함수 사용하기 위해 함수 이름을 변환 시킴$)$ 때문이다.<br>
 
-# Symbol
-
-# 컴파일 과정 
-
-# Link Description file
-
-# Mapfile
-
-# Disassembler
-objdump<br>
-llvm-objdump로 가능. <br>
-file<br>
-readelf<br>
-file .o<br>
-
-### elf를 linking 해보자.
-
-### lib, dll을 만들어보자.
+```
+// 2가지 command로 해당 함수에 해당하는 symbol을 볼 수 있다.
+nm libarithmetic_operation.so |grep add 
+readelf -a libarithmetic_operation.so
+```
+  를 통해 so file 안의 symbol talbe에서 add 함수가 있는 곳을 알 수 있다.<br>
+  혹은 shared library를 만들 때, extern "C" keyward를 활용하여, name mangling을 막아야 한다.<br>
+```
+  extern "C" int test_dl_func();
+```
 
 # 출처 
 씹어 먹는 c++ <br>
 embedded recipy <br>
 https://www.joinc.co.kr/w/Site/C/Documents/CprogramingForLinuxEnv/Ch12_module<br>
+https://yaaam.tistory.com/entry/Linux-%EB%8F%99%EC%A0%81-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC-%EB%A1%9C%EB%93%9C-dlopen-dlsym-dlclose-dlerror <br>
+https://modoocode.com/321<br>
+https://www.it-note.kr/186<br>
+https://man7.org/linux/man-pages/man3/dlopen.3.html<br>
+https://umbum.dev/494<br>
+https://stackoverflow.com/questions/18096596/using-dlsym-in-c-without-extern-c<br>
