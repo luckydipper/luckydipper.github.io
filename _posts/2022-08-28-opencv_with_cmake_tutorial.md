@@ -16,21 +16,34 @@ comments: true
 
 # 목차
 
+[1.어떻게 다운 받는가?](#어떻게-다운-받는가?) <br>
+  * [1.1 필수적으로 다운 받아야 하는 파일](#11-필수적으로-다운-받아야-하는-파일)<br>
+  * [1.2 선택적으로 받아야 하는 파일](#12-선택적으로-받아야-하는-파일)<br>
+  * [1.3 프로젝트 directory 만들기](#13-프로젝트-directory-만들기)<br>
+  * [1.4 Build 하기](#14-Build-하기)<br>
+  * [1.5 다운로드 완료 확인](#15-다운로드-완료-확인)<br>
 
-# 어떻게 다운 받는가?
+[2. 2. 예제](#2-예제) <br>
+  * [2.1 파일 구조](#21-파일-구조)<br>
+  * [2.2 코드](#22-코드)<br>
+  * [2.3 CMakeLists](#23-CMakeLists)<br>
+  * [2.4 Build](#24-Build)<br>
+  * [2.5 Execute](#25-Execute)<br>
 
-### 1. 필수적으로 다운 받아야 하는 파일
+# 1. 어떻게 다운 받는가?
+
+### 1.1 필수적으로 다운 받아야 하는 파일
 ```
 sudo apt-get install build-essential
 sudo apt-get install cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev
 ```
 
-### 1.1 선택적으로 받아야 하는 파일
+### 1.2 선택적으로 받아야 하는 파일
 ```
 sudo apt-get install python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev
 ```
 
-### 2. 프로젝트 directory 만들기
+### 1.3 프로젝트 directory 만들기
 ```
 git clone https://github.com/opencv/opencv.git
 
@@ -64,7 +77,7 @@ opencv
 └── samples
 ```
 
-### 3. Build 하기
+### 1.4 Build 하기
 오래 걸리기 때문에 -j를 줘서 뒤의 숫자 만큼 병렬처리 한다. <br>
 ```
 cd build
@@ -75,7 +88,7 @@ build 한다. <br>
 sudo make install
 ```
 
-### 다운로드가 완료 확인
+### 1.5 다운로드 완료 확인
 /usr/local/include/opencv4/opencv2 <br>
 에는 opencv들의 header들이 정의되어 있을 것이다. <br>
 
@@ -122,13 +135,13 @@ opencv/build
 └── version_string.tmp
 ```
 
-# 예제
+# 2. 예제
 고양이 사진을 흑백으로 만들어 보자. <br>
 
 |Before$($cat.jpg$)$|After$($gray_cat.jpg$)$|
 |![image](/assets/img/computer/vision/opencv_cmake_tutorial/cat.jpg)|![image](/assets/img/computer/vision/opencv_cmake_tutorial/gray_cat.jpg)|
 
-### 0. 파일 구조
+### 2.1 파일 구조
 ```
 convert_cat/
 ├── CMakeLists.txt
@@ -137,7 +150,7 @@ convert_cat/
 ```
 
 
-### 1. 코드
+### 2.2 코드
 ```
 // convert_color.cpp
 #include <opencv2/opencv.hpp>
@@ -166,7 +179,7 @@ int main( int argc, char** argv)
 ```
 
 
-### 2. CMakeLists
+### 2.3 CMakeLists
 ```
 cmake_minimum_required(VERSION 2.8)
 project( convert_color )
@@ -176,7 +189,7 @@ add_executable( convert_color convert_color.cpp )
 target_link_libraries( convert_color ${OpenCV_LIBS} )
 ```
 
-### 3. Build
+### 2.4 Build
 ```
 cd convert_cat
 cmake .
@@ -230,7 +243,7 @@ make
 ```
 -> convert_color 실행 파일이 나옴.<br>
 
-### Execute
+### 2.5 Execute
 ```
 ./convert_color cat.jpg
 ```
