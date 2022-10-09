@@ -30,6 +30,10 @@ ex$)$ std::vector 기반으로 만든 std::queue 와 std::stack
 |![image](/assets/img/computer/algorithm/data_structure_big_picture/vector.png)|![image](/assets/img/computer/algorithm/data_structure_big_picture/circular_queue.png)|
 
 deque는 doubly linked list로 구현한다. 앞과 뒤에 삽입과 추출이 일어나야하기 때문이다.  
+**stack** : recursion, DFS, DP$($Dynamic Programing$)$, etc...  
+**queue** : OS의 jop queue, 기다리는 사람, etc  
+**dequeue** : 앞 뒤로 넣어야 할 때 사용  
+**linked list** : element들의 erase와 insert가 많을 때 사용    
 
 ## Nonlinear data structure
 tree, graph, priority queue, hash table, set은 ADT이다. 
