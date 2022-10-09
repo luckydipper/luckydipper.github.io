@@ -13,7 +13,7 @@ comments: true
 ---
 
 # 목차
-[1.io overhead 줄이는 tip](#1io-overhead-줄이는-tip) <br>
+[1. io overhead 줄이는 tip](#1io-overhead-줄이는-tip) <br>
   * [1.1 c의 library와 multithread synchronization 끊기](#11-c의 library와-multithread-synchronization-끊기)<br>
   * [1.2 endl쓰지 말기](#12-endl쓰지-말기)<br>
 
@@ -24,7 +24,9 @@ comments: true
 
 [3. test case의 갯수를 주는 경우 vs 안 주는 경우](#3-test-case의-갯수를 주는-경우-vs-안-주는-경우)
 
-## 1.io overhead 줄이는 tip
+---
+
+## 1. io overhead 줄이는 tip
 #### 1.1 c의 library와 multithread synchronization 끊기
 ```
 // 해당 코드를 친 후에는 prinf와 scanf 사용 금지
@@ -54,7 +56,7 @@ string sentense;
 getline(cin, sentense);
 ``` 
 
-#### 2.1 stream의 cin.getlinei
+#### 2.1 istream의 cin.getline
 dlim의 앞까지 읽는다. 이때 c style의 array를 사용해서, '\0', EOL이 나올 때 까지 읽는다.
 ```c
 istream& cin.getline(char* str, streamsize n)
