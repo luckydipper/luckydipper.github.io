@@ -2,7 +2,7 @@
 layout: post
 title: "This is C++"
 categories:
-  - etc computer
+  - C C++
 tags:
   - 
   - 

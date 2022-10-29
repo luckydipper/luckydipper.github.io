@@ -2,7 +2,7 @@
 layout: post
 title: "c c++ 대표적인 컴파일러 종류"
 categories:
-  - etc computer
+  - C C++
 tags:
   - TCC 
   - GCC
