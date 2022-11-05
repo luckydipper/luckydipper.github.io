@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Analyze binaty"
+title: "Analyze binary"
 categories:
   - etc computer 
 tags:
