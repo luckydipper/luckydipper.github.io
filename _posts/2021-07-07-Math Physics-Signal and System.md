@@ -2,7 +2,7 @@
 layout: post
 title: "회로와 신호"
 categories:
-  - Physics
+  - Math Physics
 tags:
   - Convolution
   - LTI system

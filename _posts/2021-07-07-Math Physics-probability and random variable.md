@@ -2,7 +2,7 @@
 layout: post
 title: "확률과 랜덤변수"
 categories:
-  - Math
+  - Math Physics
 tags:
   - PDF (probability dense function)
   - PMF (probability mess function)

@@ -2,7 +2,7 @@
 layout: post
 title: "differenciation equation"
 categories:
-  - Math
+  - Math Physics
 tags:
   - ODE
 
