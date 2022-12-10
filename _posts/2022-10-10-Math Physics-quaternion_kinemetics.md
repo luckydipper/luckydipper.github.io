@@ -6,9 +6,17 @@ categories:
 tags:
   - Quaternion kinematics for the error-state KF
   - rotation matrix
-last_modified_at: 2022-10-10
+last_modified_at: 2022-12-10
 comments: true
 ---
+&nbsp;관련 내용은   
+유튜브 [Lie theory for the roboticist][3]와  
+책 [Introduction to Visual SLAM From Theory to Practice][3]  
+논문 [Quaternion kinematics for the error-state Kalman filter][4]을 발췌 해서 적었습니다.
+
+&nbsp;논문의 증명 부분을 보면, 갑자기 quaternion의 회전 형태가 
+$ \boldsymbol{ \mathrm{x^\prime} = q \otimes	\mathrm{x} \otimes	q^{*}}$이라고 지르고 시작한다. 그 다음에 이 형태로 했을 때 실제 회전과 모순이 없는 것을 보인다.  
+&nbsp;이후에 해밀턴이 어떻게 쿼터니언 회전 공식을 생각할 수 있는지 직관적 이유가 나온다. 4차원 복소 공간에서의 회전은 2차원 회전 2개로 설명할 수 있기 때문이다. 자세한 것은 논문의 2.8 Quaternion and isoclinic rotations: explaining the magic을 읽어보자.
 
 # 1. quaternion $($사원수$)$
 
@@ -125,6 +133,10 @@ Lie Algbra, Lie group
 [1]:https://www.youtube.com/watch?v=zjMuIxRvygQ
 
 [2]:https://www.youtube.com/watch?v=d4EgbgTm0Bg&t=1675s
+
+[3]:https://www.youtube.com/watch?v=csolG83gCV8&t=4875s
+
+[4]:https://www.iri.upc.edu/people/jsola/JoanSola/objectes/notes/kinematics.pdf
 
 // 한글 자료
 https://alida.tistory.com/60
