@@ -26,7 +26,7 @@ robot의 motion model과 perception model을 정의해서 만든다.
 
 ## Backend
 Backend는 frontend에서 나온 에러를 줄이는 방향으로 optimize한다.  
-이때 loop clousre도 같이 쓰인다.  
+이때 loop closure도 같이 쓰인다.  
 
 ## Map
 - Metric maps  
