@@ -9,7 +9,7 @@ tags:
   - Front end
   - Backend
   - Map
-last_modified_at: 2022-11-05
+last_modified_at: 2022-01-16
 comments: true
 ---
 
@@ -24,8 +24,13 @@ robot의 motion model과 perception model을 정의해서 만든다.
 여기서 feature를 추출하면 feature based slam이 된다.  
 추출하지 않을 시 struct base slam이 된다.
 
+## Visual Odometry, Ego motion estimation
+Epipolar geometry : monocular camera 2d pixel 좌표 사용.   
+ICP : binocular cmera, RGB-D 와 같이 깊이 데이터가 얻어 진다면 사용.
+PNP : 3D포인터 하나가 카메라의 2D에 사영될 때 사용.
+
 ## Backend
-Backend는 frontend에서 나온 에러를 줄이는 방향으로 optimize한다.  
+Backend는 frontend에서 나온 에러를 줄이는 방향으로 optimize 한다.  
 이때 loop closure도 같이 쓰인다.  
 
 ## Map
