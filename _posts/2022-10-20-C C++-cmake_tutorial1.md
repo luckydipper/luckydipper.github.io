@@ -170,7 +170,7 @@ target_link_libraries(MathFunctions tutorial_compiler_flags)
 ex$)$ warning flag를 줄 때  
  cmake 3.15 이후 버전에서 적용된다.  
 
-## Step 4: Installing and Testing
+## Step 5: Installing and Testing
 install은 빌드와 다르게 컴퓨터의 환경변수에 모두 등록된다.  
 아래 명령어로 install 할 수 있다.  
 ```
@@ -191,6 +191,7 @@ install(FILES "${PROJECT_BINARY_DIR}/TutorialConfig.h"
   DESTINATION include
   )
 ```
+
 ```
 @instance-1:~/Desktop/cmake-3.26.0-rc1-tutorial-source/Step5/build$ sudo cmake --install .
 -- Install configuration: ""
@@ -204,9 +205,41 @@ gcc의 기본 include 경로를 살펴보면, /usr/local/include가 있다.
 ```
 echo | gcc -v -x c++ -E -
 ```
+
 이제 터미널에
 ```
-Tutorial이라고 치면 컴파일된 Tutorial
+Tutorial이라고 치면 컴파일된 Tutorial이 실행된다.
+```
+삭제를 위해선 
+```
+xargs rm < install_manifest.txt
+```
+
+#### test 만들기
+ctest가 있는 상태에서
+```
+enable_testing()
+
+function(do_test target arg result)
+  add_test(NAME Comp${arg} COMMAND ${target} ${arg})
+  set_tests_properties(Comp${arg}
+    PROPERTIES PASS_REGULAR_EXPRESSION ${result}
+    )
+endfunction()
+
+# do a bunch of result based tests
+do_test(Tutorial 4 "4 is 2")
+do_test(Tutorial 9 "9 is 3")
+do_test(Tutorial 5 "5 is 2.236")
+do_test(Tutorial 7 "7 is 2.645")
+do_test(Tutorial 25 "25 is 5")
+do_test(Tutorial -25 "-25 is (-nan|nan|0)")
+do_test(Tutorial 0.0001 "0.0001 is 0.01")
+```
+test하는 방법.  
+```
+ctest -N
+ctest -VV
 ```
 
 #### TODO : 씹어먹는 c++  참조
