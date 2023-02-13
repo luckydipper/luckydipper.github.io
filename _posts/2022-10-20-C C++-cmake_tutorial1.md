@@ -131,7 +131,83 @@ target_include_directories(Tutorial PUBLIC
 로 가능하다.  
 cmake 컴파일시, -D flag를 줘서 해당 파일을 링크 할지 설정 할 수 있음. 
 
+## Step3. Adding Usage Requirements for a Library
+step2보다 최신 방법으로 library를 링킹하는 법을 소개한다.  
+interface이다.  
+MathFunctions에 링킹되는 것들은 mathfunction의 현재 주소에서 헤더를 읽어야한다.  
+```
+#MathFunctions/CMakeLists.txt
+add_library(MathFunctions mysqrt.cxx)
 
+target_include_directories(MathFunctions
+    INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+```
+interface는 사용자는 필요하지만 제공자는 필요하지 않는 것.  
+타겟 A의 속성을 INTERFACE로 지정하면, 타겟 A를 사용하는 제3의 타겟에게만 적용된다.  
+
+## Step 4: Adding Generator Expressions
+generator expression일반화 표현식은 빌드과정에서 미세한 조정을 할 때 쓰인다.  
+target의 property로 많이 쓰인다. configuration이 아닌 generating step에서 사용된다.  
+```$<...>``` 구문으로 사용한다.   
+c++표준이나 컴파일 플래그를 줘서, 조건적으로 링킹할 때 사용.
+ex$)$ c++ 버전을 고정 시킬 때,
+```
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+```
+대신 
+```
+#CMakeLists.txt
+add_library(tutorial_compiler_flags INTERFACE)
+target_compile_features(tutorial_compiler_flags INTERFACE cxx_std_11)
+target_link_libraries(Tutorial PUBLIC ${EXTRA_LIBS} tutorial_compiler_flags)
+```
+```
+#MathFunctions/CMakeLists.txt
+target_link_libraries(MathFunctions tutorial_compiler_flags)
+```
+를 사용한다.  
+ex$)$ warning flag를 줄 때  
+ cmake 3.15 이후 버전에서 적용된다.  
+
+## Step 4: Installing and Testing
+install은 빌드와 다르게 컴퓨터의 환경변수에 모두 등록된다.  
+아래 명령어로 install 할 수 있다.  
+```
+//sudo가 필요하다. 
+cmake --build . --target install --config Debug
+cmake --install .
+cmake --install . --prefix "/home/myuser/installdir"
+```
+```
+# MathFunctions/CMakeLists.txt
+set(installable_libs MathFunctions tutorial_compiler_flags)
+install(TARGETS ${installable_libs} DESTINATION lib)
+install(FILES MathFunctions.h DESTINATION include)
+```
+```
+install(TARGETS Tutorial DESTINATION bin)
+install(FILES "${PROJECT_BINARY_DIR}/TutorialConfig.h"
+  DESTINATION include
+  )
+```
+```
+@instance-1:~/Desktop/cmake-3.26.0-rc1-tutorial-source/Step5/build$ sudo cmake --install .
+-- Install configuration: ""
+-- Installing: /usr/local/lib/libMathFunctions.a
+-- Installing: /usr/local/include/MathFunctions.h
+-- Installing: /usr/local/bin/Tutorial
+-- Installing: /usr/local/include/TutorialConfig.h
+```
+
+gcc의 기본 include 경로를 살펴보면, /usr/local/include가 있다.
+```
+echo | gcc -v -x c++ -E -
+```
+이제 터미널에
+```
+Tutorial이라고 치면 컴파일된 Tutorial
+```
 
 #### TODO : 씹어먹는 c++  참조
 target vs property  
