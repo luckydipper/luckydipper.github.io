@@ -2,6 +2,12 @@
 markdown:         kramdown
 highlighter:      rouge
 
+# ADD line number in code block
+kramdown:
+    highlighter: rouge
+    syntax_highlighter_opts:
+        block:
+            line_numbers: true
 
 # Setup
 remote_theme:     fongandrew/hydeout
