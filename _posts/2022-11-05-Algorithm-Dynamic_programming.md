@@ -150,13 +150,13 @@ int fobonacci(int n)
 2. python은 stack over flow가 자주 일어난다. sys.setrecursionlimit(1200)로 해결한다.
 3. 둘중 하나만으로 풀리는 것도 존재한다.  
 
-## Dynamic programming vs Devide and Conquer
+## 7. Dynamic programming vs Devide and Conquer
 
 |종류|차이점|공통점|
 |DP와 D&C|---|큰 문제를 작은 문제로 나눠 푼다.|
 |DP|작은 문제가 중복 가능하다. ex$)$ 숫자로 나눈다.|
 |D&C|작은 문제들이 중복이 불가능하다.|
 
-## 출처 
+## 8. 출처 
 - BOJ 기초 강의 1
 - 알고리즘 문제 해결 전략
