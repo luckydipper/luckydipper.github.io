@@ -13,7 +13,24 @@ tags:
 last_modified_at: 2023-05-20
 comments: true
 ---
-해당 포스팅에는 배열과 숫자를 나눠서 탐색하는 방법을 적겠습니다.
+해당 포스팅에는 배열과 숫자를 나눠서 탐색하는 방법을 적겠습니다. 
+## 목차
+  - [1. power set, 멱집합](#1-power-set,-멱집합)
+    * [1.1 positional notation, 위치 기수법](#11-positional-notation,-위치-기수법)
+    * [1.2 Back tracking](#12-back-tracking)
+    * [1.3 lexicographical order 사전순 구현](#13-lexicographical-order-사전순-구현)
+  - [2. Permutation with repeatation](#2-permutation-with-repeatation)
+    * [2.1 back tracking 구현](#21-back-tracking-구현)
+    * [2.2 positional notation](#22-positional-notation)
+  - [3.Permutation](#3permutation)
+    * [3.1 lexicographical 사전순으로 구현](#31-lexicographical-사전순으로-구현)
+    * [3.2 back tracking](#32-back-tracking)
+  - [4. Combination](#4-combination)
+    * [4.1 lexicographical](#41-lexicographical)
+    * [4.2 choose smallest in the array. using vector STL](#42-choose-smallest-in-the-array-using-vector-stl)
+  - [5. Combination with repeatation](#5-combination-with-repeatation)
+  - [6. Partition of natural number](#6-partition-of-natural-number)
+  - [Partition of set](#partition-of-set)
 
 ## 1. power set, 멱집합 
 멱집합은 해당 집합의 부분집합들의 집합입니다.  
@@ -186,6 +203,7 @@ int main(){
 ```
 ### 4.2 choose smallest in the array. using vector STL
 example  
+
 ```
 void print_combination(int n, int m){
     if(picked.size() == m){
@@ -207,10 +225,54 @@ void print_combination(int n, int m){
 }
 ```
 
-## Partition of natural number
-서로 같은 것을 서로 같은 것에 분할 하는 방법.
--> 아마 DP로 할 듯. 
+## 5. Combination with repeatation  
+서로 다른 것을 서로 같은 곳에 분할 하는 방법. 
+- 시간 복잡도 $O(n+r-1Cr)$  
+- 공간 복잡도 $O(N)$  
+example  
 
+```
+int N, M;
+vector<int> chosen;
+
+void Homogenious(int n, int m){
+    if(chosen.size() == m){
+        for(int i: chosen)
+            cout << i+1 << " ";
+        cout << "\n";
+        return;
+    }
+    int smallest = chosen.empty() ? 0 : chosen.back();
+    for(int i = smallest; i < n; i++){
+        chosen.push_back(i);
+        Homogenious(n, m);
+        chosen.pop_back();
+    }
+}
+```
+
+## 6. Partition of natural number
+서로 같은 것을 서로 같은 것에 분할 하는 방법입니다.  
+$P(n,m)$ : n을 m 이하의 자연수들의 합으로 나타내는 방법  
+$P[n][m] = \displaystyle \sum_{i=1}^m D[n-i][i] $  
+이때 각각의 i는 집합을 분할 했을 때 사용한 최대 수입니다.  
+
+```
+//https://blankspace-dev.tistory.com/73에 나와있습니다.
+int partition(int n, int m){
+    if(n < m)
+        m = n;
+    if(n == 0)
+        return 1;
+
+    int cnt = 0;
+    for(int i = 1; i <= m; i++)
+        cnt += partition(n-i, i);
+    
+    return cnt;
+}
+```
 ## Partition of set
-서로 다른 것을 서로 같은 것으로 분할 하는 방법.  
-자연수의 분할을 시행한 후, combination으로 중복 처리를 해준다.  
+서로 같은 것을 서로 다른 것으로 분할 하는 방법입니다.  
+수학에서는 자연수의 분할을 시행한 후, combination으로 중복 처리를 해주면 됩니다.
+하지만 프로그래밍 에선 -> power set 만드는 것과 동일합니다.  
