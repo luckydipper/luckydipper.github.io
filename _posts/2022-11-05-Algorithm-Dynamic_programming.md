@@ -9,7 +9,7 @@ tags:
   - Overlappiong subproblem
   - Optimal structure
   - Memoization
-last_modified_at: 2022-05-20
+last_modified_at: 2022-05-29
 comments: true
 ---
 
@@ -27,7 +27,7 @@ cache를 사용하여 빠르게 수행하는 알고리즘.
 
 예시) BOJ 2156. 포도주 시식을 **비효율적**으로 푸는법  
 
-```
+```c++
 #include<bits/stdc++.h>
 using namespace std;
 int n;
@@ -65,7 +65,7 @@ int main(){
 총 $O(N^2)$의 시간복잡도로 설계했다.  
 이를 최적화해서 아래와 같이 쓰면,  
 
-```
+```c++
 // D[i] : 1~i까지 먹은 최대의 와인양
 D[i] = max(D[i-1], D[i-3] + arr[i-1] + arr[i], D[i-2] + arr[i]);
 ```
@@ -89,24 +89,30 @@ $O(N)$으로 풀 수 있을 것이다.
 ## 4. Memoization 
 **DP의 핵심이다.**    
 - 푸는 중간에 정답이 변하지 않는 과정을 기록해 놓는다.
-- **항상 cache에 들어가기 전에 base case를 처리해 줘야 한다.**
-```
+- **항상 cache에 들어가기 전에 base case를 처리해 줘야 한다.**  
+
+```c++
 if(out_of_bound(i,j) || base_case(i,j))
   return 1;
-
 ```  
-- 아래와 같은 방식으로 cache를 쉽게 초기화 가능하다.
-```
+
+- 아래와 같은 방식으로 cache를 쉽게 초기화 가능하다.  
+
+```c++
 //memset은 cache를 0이나 -1로만 초기화 할 수 있다. 
 cache[99][34];
 memset(cache, -1, sizeof(cache));
 ```
-- reference로 cache를 그때 그때 typing 하지 않는다.
-```
+
+- reference로 cache를 그때 그때 typing 하지 않는다.  
+
+```c++
 int& ret = cache[i][j];
 ```
-- return 할 때 path compression 경로 압축 한다.
-```
+
+- return 할 때 path compression 경로 압축 한다.  
+
+```c++
 return ret = max(cache[i-1] + cache[i-2], cache[1]);
 ```
 
