@@ -6,7 +6,7 @@ categories:
 tags:
   - scientific notation
   - exponential
-last_modified_at: 2023-05- 20
+last_modified_at: 2023-05-20
 comments: true
 ---
 
